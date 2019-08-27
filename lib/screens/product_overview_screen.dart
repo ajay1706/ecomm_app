@@ -3,35 +3,60 @@ import 'package:ecomm_app/providers/product.dart';
 import 'package:ecomm_app/widgets/products_grid.dart';
 
 
-class ProductsOverviewScreen  extends StatelessWidget {
 
-  final List<Product> loadedProduct = [
+enum FilterOptions {
+  Favorites,
+  All,
+}
 
-  ]
+class ProductsOverviewScreen extends StatefulWidget {
 
+  @override
+  _ProductsOverviewScreenState createState() => _ProductsOverviewScreenState();
+}
 
-  ;
+class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
 
+  var _showOnlyFavorites = false;
+
+  final List<Product> loadedProduct = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(
-          "MyShop"
-      ),
-      actions: <Widget>[
-        PopupMenuButton(
-          onSelected: (int selectedValue){
-            print((selectedValue));
-          },
-          icon: Icon(Icons.more_vert),itemBuilder: (_) => [
+      appBar: AppBar(
+        title: Text("MyShop"),
+        actions: <Widget>[
+          PopupMenuButton(
+            onSelected: (FilterOptions selectedValue) {
+              setState(() {
+                if(selectedValue == FilterOptions.Favorites){
+                  _showOnlyFavorites = true;
 
-          PopupMenuItem(child: Text("Only Favorites"),value: 0,),
-          PopupMenuItem(child: Text("Show all"),value: 1,)
-        ],)
-      ],),
-      body: ProductsGrid(),
+                }
+                else{
+
+                  _showOnlyFavorites = false;
+
+                }
+              });
+
+            },
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+              PopupMenuItem(
+                child: Text("Only Favorites"),
+                value: FilterOptions.Favorites,
+              ),
+              PopupMenuItem(
+                child: Text("Show all"),
+                value: FilterOptions.All,
+              )
+            ],
+          )
+        ],
+      ),
+      body: ProductsGrid(_showOnlyFavorites),
     );
   }
 }
-
