@@ -1,6 +1,7 @@
 import 'package:ecomm_app/providers/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:ecomm_app/widgets/cart_item.dart' as ci;
 
 
 class CartScreen extends StatelessWidget {
@@ -46,7 +47,19 @@ Spacer()                ,
                 )
               ],
             ),),
+          ),
+          SizedBox(height: 15,),
+          Expanded(
+            child: ListView.builder(itemBuilder:(ctx ,i ) => ci.CartItem(
+              cart.items[i].id,
+              cart.items[i].price,
+              cart.items[i].quantity,
+              cart.items[i].title,
+
+
+            ) ,itemCount: cart.itemCount,),
           )
+
         ],
       ) ,
     );
