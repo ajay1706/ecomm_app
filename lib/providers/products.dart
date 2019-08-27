@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:ecomm_app/models/product.dart';
+import 'package:ecomm_app/providers/product.dart';
 
 
 
@@ -46,6 +46,11 @@ List<Product> get items{
   return  [..._items];
 }
 
+Product  findById(String id){
+
+  return _items.firstWhere((prod) => prod.id ==id)
+;
+}
 
 addProduct(){
 //  _items.add(value);
