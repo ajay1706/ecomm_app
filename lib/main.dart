@@ -1,3 +1,4 @@
+import 'package:ecomm_app/providers/cart.dart';
 import 'package:ecomm_app/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'screens/product_overview_screen.dart';
@@ -11,8 +12,15 @@ void main(){
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: Products(),
+    return  MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(
+        value: Products(),
+        ),
+      ChangeNotifierProvider.value(value: Cart()
+      ),
+      ],
+
       child: MaterialApp(
         title: "My Shop",
         theme: ThemeData(
@@ -25,8 +33,8 @@ class MyApp extends StatelessWidget {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
 
         },
-      ),
-    );
+
+    ));
   }
 }
 
