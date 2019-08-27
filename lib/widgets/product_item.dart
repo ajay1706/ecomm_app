@@ -47,7 +47,8 @@ class ProductItem extends StatelessWidget {
           ),
 
           title: Text(product.title,textAlign: TextAlign.center,),
-          trailing: IconButton(icon: Icon(Icons.shopping_cart),onPressed: () {
+          trailing: IconButton(icon: Icon(Icons.shopping_cart),
+              color: Theme.of(context).accentColor,onPressed: () {
             cart.addItem(product.id, product.price, product.title);
           },),
         ),

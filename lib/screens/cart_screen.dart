@@ -22,6 +22,7 @@ static const routeName = '/cart';
             margin: EdgeInsets.all(15),
             child: Padding(padding: EdgeInsets.all(8),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Text("Total",
                 style: TextStyle(
@@ -29,14 +30,20 @@ static const routeName = '/cart';
 
                 ),)
                 ,
-                SizedBox(width: 10,)
-                ,
+Spacer()                ,
                 Chip(
                   label: Text('\$ ${cart.totalAmount}',style: TextStyle(
-                    color: Colors.white
+                    color: Theme.of(context).primaryTextTheme.title.color
                   ),),
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
+                FlatButton(
+                  child: Text(
+                    "ORDER NOW"
+                  ),
+                  onPressed: (){},
+                  textColor: Theme.of(context).primaryColor,
+                )
               ],
             ),),
           )
