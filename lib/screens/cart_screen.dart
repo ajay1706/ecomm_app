@@ -1,7 +1,7 @@
-import 'package:ecomm_app/providers/cart.dart';
+import 'package:ecomm_app/providers/cart.dart' show Cart;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:ecomm_app/widgets/cart_item.dart' as ci;
+import 'package:ecomm_app/widgets/cart_item.dart' ;
 
 
 class CartScreen extends StatelessWidget {
@@ -29,9 +29,8 @@ static const routeName = '/cart';
                 style: TextStyle(
                   fontSize: 20,
 
-                ),)
-                ,
-Spacer()                ,
+                ),),
+Spacer(),
                 Chip(
                   label: Text('\$ ${cart.totalAmount}',style: TextStyle(
                     color: Theme.of(context).primaryTextTheme.title.color
@@ -48,17 +47,21 @@ Spacer()                ,
               ],
             ),),
           ),
-          SizedBox(height: 15,),
-          Expanded(
-            child: ListView.builder(itemBuilder:(ctx ,i ) => ci.CartItem(
-              cart.items[i].id,
-              cart.items[i].price,
-              cart.items[i].quantity,
-              cart.items[i].title,
+          SizedBox(height: 10,),
+Expanded(
+  child: ListView.builder(
+    itemCount: cart.items.length,
+    itemBuilder: (ctx, i) => CartItem(
+      cart.items.values.toList()[i].id,
+      cart.items.values.toList()[i].price,
+      cart.items.values.toList()[i].quantity,
+      cart.items.values.toList()[i].title,
+      cart.items.keys.toList()[i],
 
 
-            ) ,itemCount: cart.itemCount,),
-          )
+    ),
+  ),
+)
 
         ],
       ) ,
