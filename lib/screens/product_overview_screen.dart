@@ -1,4 +1,5 @@
 import 'package:ecomm_app/screens/cart_screen.dart';
+import 'package:ecomm_app/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:ecomm_app/providers/product.dart';
 import 'package:ecomm_app/widgets/products_grid.dart';
@@ -71,6 +72,11 @@ Consumer<Cart> (builder: (_, cart, ch)=> Badge(
 
         ],
       ),
+
+drawer: AppDrawer(
+
+),
+
       body: ProductsGrid(_showOnlyFavorites),
     );
   }

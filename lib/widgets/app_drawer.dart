@@ -1,3 +1,4 @@
+import 'package:ecomm_app/screens/orders_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -33,7 +34,7 @@ class AppDrawer extends StatelessWidget {
             onTap: (){
 
 
-              Navigator.of(context).pushReplacementNamed('/');
+              Navigator.of(context).pushReplacementNamed(OrdersScreen.routeName);
             },
           )
 
