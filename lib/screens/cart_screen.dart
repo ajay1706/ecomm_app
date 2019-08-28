@@ -41,7 +41,12 @@ Spacer(),
                   child: Text(
                     "ORDER NOW"
                   ),
-                  onPressed: (){},
+                  onPressed: (){
+
+                    Provider.of(context, listen: false).addOrder(cart.items.values.toList() , cart.totalAmount);
+
+                    cart.clear();
+                  },
                   textColor: Theme.of(context).primaryColor,
                 )
               ],
