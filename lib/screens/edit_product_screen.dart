@@ -12,16 +12,34 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
 final _priceFocueNode  = FocusNode();
 final _descriptionNode = FocusNode();
+final _imageUrlController = TextEditingController();
+final _imageUrlFocusNode = FocusNode();
 
+@override
+  void initState() {
+_imageUrlFocusNode.addListener(_updateImageUrl);
+super.initState();
+  }
 
 @override
   void dispose() {
     // TODO: implement dispose
+  _imageUrlFocusNode.removeListener(_updateImageUrl);
     _priceFocueNode.dispose();
     _descriptionNode.dispose();
+    _imageUrlController.dispose();
+    _imageUrlFocusNode.dispose();
     super.dispose();
   }
 
+  void _updateImageUrl(){
+  if(!_imageUrlFocusNode.hasFocus) {
+    setState(() {
+
+
+    });
+  }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +77,41 @@ final _descriptionNode = FocusNode();
                 keyboardType: TextInputType.multiline,
               focusNode: _descriptionNode,
               ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  Container(
+
+                    height: 100,
+                    width: 100,
+                    margin: EdgeInsets.only(top: 8,
+                    right: 10),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1,
+                        color: Colors.grey,
+                      )
+                    ),
+                    child: _imageUrlController.text.isEmpty ?
+                    Text("Enter a URL") : FittedBox(
+                      child: Image.network(_imageUrlController.text,
+                      fit: BoxFit.cover,),
+                    ),
+                  ),
+
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Image URL'
+
+                    ),
+                    keyboardType: TextInputType.url,
+                    textInputAction: TextInputAction.done,
+controller: _imageUrlController,
+                    focusNode: _imageUrlFocusNode,
+                  ),
+                )],
+              )
             ],
           ),
         ),
