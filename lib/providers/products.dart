@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import './product.dart';
+import 'dart:convert';
 
 class Products with ChangeNotifier {
   List<Product> _items = [
@@ -65,6 +66,16 @@ class Products with ChangeNotifier {
   // }
 
   void addProduct(Product product) {
+    final url = 'https://flutter-update-6c1d6.firebaseio.com/products.json';
+    http.post(url , body: json.encode({
+      'title': product.title,
+      'description': product.description,
+      'imageUrl':product.imageUrl,
+      'price':product.price,
+      'isFavorite':product.isFavorite
+
+    }));
+
     final newProduct = Product(
       title: product.title,
       description: product.description,
