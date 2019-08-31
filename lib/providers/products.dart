@@ -66,7 +66,7 @@ class Products with ChangeNotifier {
   // }
 
   Future<void> addProduct(Product product) {
-    final url = 'https://flutter-update-6c1d6.firebaseio.com/products.json';
+    final url = 'https://flutter-update-6c1d6.firebaseio.com/products';
    return http.post(url , body: json.encode({
       'title': product.title,
       'description': product.description,
@@ -88,7 +88,10 @@ class Products with ChangeNotifier {
       // _items.add(value);
       notifyListeners();
 
-    });
+    }).catchError((error){
+      print(error);
+      throw error;
+   });
 
   }
 
