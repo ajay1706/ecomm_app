@@ -83,7 +83,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
   }
 
-  Future<void>  _saveForm() async{
+  Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
     if (!isValid) {
       return;
@@ -91,52 +91,44 @@ class _EditProductScreenState extends State<EditProductScreen> {
     _form.currentState.save();
     setState(() {
       _isLoading = true;
-
     });
     if (_editedProduct.id != null) {
-      Provider.of<Products>(context, listen: false)
+      await Provider.of<Products>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
-      setState(() {
-        _isLoading =false;
-      });
-
-
-      Navigator.of(context).pop();
     } else {
       try {
         await Provider.of<Products>(context, listen: false)
             .addProduct(_editedProduct);
+      } catch (error) {
+        await showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+            title: Text('An error occurred!'),
+            content: Text('Something went wrong.'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Okay'),
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+              )
+            ],
+          ),
+        );
       }
-      catch (error) {
-        showDialog(context: context,
-            builder: (ctx) =>
-                AlertDialog(
-                  title: Text("An error occured"),
-                  content: Text("Something went wrong"),
-                  actions: <Widget>[
-                    FlatButton(
-                      child: Text("OKay"),
-                      onPressed: () {
-                        Navigator.of(ctx).pop();
-                      },
-                    )
-                  ],
-                ));
-      }finally{
-
-        setState(() {
-          _isLoading = false;
-        });
-        Navigator.of(context).pop();
-
-
-      }
-
-
-      }
+      // finally {
+      //   setState(() {
+      //     _isLoading = false;
+      //   });
+      //   Navigator.of(context).pop();
+      // }
     }
-
-
+    setState(() {
+      _isLoading = false;
+    });
+    Navigator.of(context).pop();
+    // Navigator.of(context).pop();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,12 +142,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
           ),
         ],
       ),
-      body: _isLoading ? Center(
-        child: CircularProgressIndicator(
-
-
-        ),
-      ):Padding(
+      body: _isLoading
+          ? Center(
+        child: CircularProgressIndicator(),
+      )
+          : Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _form,
@@ -191,7 +182,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 keyboardType: TextInputType.number,
                 focusNode: _priceFocusNode,
                 onFieldSubmitted: (_) {
-                  FocusScope.of(context).requestFocus(_descriptionFocusNode);
+                  FocusScope.of(context)
+                      .requestFocus(_descriptionFocusNode);
                 },
                 validator: (value) {
                   if (value.isEmpty) {
@@ -312,5 +304,3 @@ class _EditProductScreenState extends State<EditProductScreen> {
     );
   }
 }
-
-
